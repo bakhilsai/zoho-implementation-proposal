@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full bg-slate-50">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>B2B Software Comparison Proposal (5 Users)</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f0f3ff',
+                            100: '#e0e7ff',
+                            600: '#4f46e5',
+                            700: '#4338ca',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Inter Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .preview-wrapper {
+            transition: all 0.3s ease-in-out;
+            margin: 0 auto;
+        }
+        .view-desktop { width: 100%; max-width: 100%; }
+        .view-mobile { 
+            width: 390px; 
+            max-width: 100%; 
+            border-radius: 32px; 
+            border: 8px solid #0f172a; 
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); 
+        }
+        .custom-scrollbar::-webkit-scrollbar { height: 6px; width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: #f1f5f9; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
+    </style>
+</head>
+<body class="bg-slate-100 text-slate-800 min-h-screen flex flex-col antialiased">
+
+    <!-- TOP HEADER WITH SIMPLE DEVICE ICONS (LAPTOP & MOBILE) -->
+    <header class="sticky top-0 z-50 bg-white border-b border-slate-200 px-4 py-3 shadow-sm">
+        <div class="max-w-7xl mx-auto flex items-center justify-between gap-4">
+            
+            <!-- Title & User Context -->
+            <div class="flex items-center gap-3">
+                <div class="p-2 bg-indigo-50 text-indigo-600 rounded-lg border border-indigo-100">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 002 2h2a2 2 0 002-2z"></path></svg>
+                </div>
+                <div>
+                    <h1 class="text-sm font-bold text-slate-900 tracking-tight">Software Comparison Dashboard</h1>
+                    <p class="text-xs text-slate-500">5-User B2B Software Evaluation</p>
+                </div>
+            </div>
+
+            <!-- View Switcher Icons Only -->
+            <div class="flex items-center bg-slate-100 p-1 rounded-lg border border-slate-200">
+                <button onclick="setViewport('desktop')" id="btn-desktop" class="p-1.5 rounded bg-white text-indigo-600 shadow-sm transition" title="Desktop View">
+                    <!-- Laptop Icon -->
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                </button>
+                <button onclick="setViewport('mobile')" id="btn-mobile" class="p-1.5 rounded text-slate-500 hover:text-slate-900 transition" title="Mobile View">
+                    <!-- Mobile Icon -->
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>
+                </button>
+            </div>
+
+        </div>
+    </header>
+
+    <!-- MAIN DASHBOARD WRAPPER -->
+    <main class="flex-1 p-3 sm:p-6 overflow-x-hidden">
+        <div id="previewContainer" class="preview-wrapper view-desktop bg-white border border-slate-200 rounded-2xl shadow-sm overflow-hidden transition-all duration-300">
+            
+            <!-- HEADER BAR & TOGGLES -->
+            <div class="p-4 sm:p-6 bg-slate-50 border-b border-slate-200 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                <div>
+                    <h2 class="text-base sm:text-lg font-bold text-slate-900">Software Configuration Pricing</h2>
+                    <p class="text-xs text-slate-500">Live Indian pricing for 5 users across software options</p>
+                </div>
+
+                <!-- Interactive Pricing Toggles -->
+                <div class="flex flex-wrap items-center gap-3 bg-white p-2 rounded-xl border border-slate-200 shadow-sm w-full sm:w-auto justify-between sm:justify-start">
+                    <!-- Annual / Monthly Toggle -->
+                    <div class="flex items-center gap-2">
+                        <span class="text-xs text-slate-500">Monthly</span>
+                        <button id="cycleToggle" onclick="toggleBillingCycle()" class="w-9 h-5 bg-indigo-600 rounded-full p-0.5 transition-colors relative">
+                            <div id="cycleDot" class="w-4 h-4 bg-white rounded-full transition-transform translate-x-4 shadow-sm"></div>
+                        </button>
+                        <span class="text-xs font-semibold text-slate-800">Annual Basis</span>
+                    </div>
+
+                    <div class="h-4 w-px bg-slate-200"></div>
+
+                    <!-- GST Toggle -->
+                    <div class="flex items-center gap-2">
+                        <span class="text-xs text-slate-500">Excl. GST</span>
+                        <button id="gstToggle" onclick="toggleGST()" class="w-9 h-5 bg-slate-300 rounded-full p-0.5 transition-colors relative">
+                            <div id="gstDot" class="w-4 h-4 bg-white rounded-full transition-transform translate-x-0 shadow-sm"></div>
+                        </button>
+                        <span class="text-xs font-semibold text-slate-800">+18% GST</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CARDS GRID: STRICTLY SINGLE COLUMN ON MOBILE (grid-cols-1) AND 2/3 COLS ON LARGER SCREENS -->
+            <div class="p-4 sm:p-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+
+                    <!-- OPTION 1 -->
+                    <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm flex flex-col justify-between">
+                        <div>
+                            <div class="flex justify-between items-center mb-3">
+                                <span class="text-xs font-bold text-slate-400">OPTION 1</span>
+                                <span class="px-2.5 py-0.5 bg-emerald-50 text-emerald-700 text-[11px] font-bold rounded-md border border-emerald-200">BUDGET-FRIENDLY</span>
+                            </div>
+                            <h3 class="text-base font-bold text-slate-900 mb-1">Zoho Bigin + Zoho Books</h3>
+                            <p class="text-xs text-slate-500 mb-4">Pipeline management paired with cloud accounting.</p>
+                            
+                            <div class="space-y-2 border-t border-slate-100 pt-3 text-xs">
+                                <div class="flex justify-between items-center">
+                                    <span class="text-slate-600">Bigin Premier (5 Users)</span>
+                                    <a href="https://www.bigin.com/pricing.html" target="_blank" class="text-indigo-600 hover:underline font-medium">₹720/user ↗</a>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-slate-600">Zoho Books Standard</span>
+                                    <a href="https://www.zoho.com/in/books/pricing/" target="_blank" class="text-indigo-600 hover:underline font-medium">₹749/org ↗</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-5 pt-4 border-t border-slate-100 bg-slate-50 -mx-5 -mb-5 p-5 rounded-b-xl">
+                            <p class="text-[11px] text-slate-500" id="label-opt1">5-User Monthly Total</p>
+                            <p class="text-2xl font-bold text-slate-900 mt-0.5" id="price-opt1">₹4,349</p>
+                        </div>
+                    </div>
+
+                    <!-- OPTION 2 -->
+                    <div class="bg-white rounded-xl p-5 border-2 border-indigo-500 shadow-sm flex flex-col justify-between relative">
+                        <span class="absolute -top-2.5 right-4 bg-indigo-600 text-white text-[10px] font-bold px-2.5 py-0.5 rounded shadow-sm">RECOMMENDED</span>
+                        <div>
+                            <div class="flex justify-between items-center mb-3">
+                                <span class="text-xs font-bold text-slate-400">OPTION 2</span>
+                                <span class="px-2.5 py-0.5 bg-indigo-50 text-indigo-700 text-[11px] font-bold rounded-md border border-indigo-200">Sales & Accounting</span>
+                            </div>
+                            <h3 class="text-base font-bold text-slate-900 mb-1">Zoho CRM Std + Zoho Books</h3>
+                            <p class="text-xs text-slate-500 mb-4">Advanced sales tracking, deals, and native invoicing sync.</p>
+                            
+                            <div class="space-y-2 border-t border-slate-100 pt-3 text-xs">
+                                <div class="flex justify-between items-center">
+                                    <span class="text-slate-600">Zoho CRM Standard (5 Users)</span>
+                                    <a href="https://www.zoho.com/crm/pricing.html" target="_blank" class="text-indigo-600 hover:underline font-medium">₹800/user ↗</a>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-slate-600">Zoho Books Standard</span>
+                                    <a href="https://www.zoho.com/in/books/pricing/" target="_blank" class="text-indigo-600 hover:underline font-medium">₹749/org ↗</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-5 pt-4 border-t border-slate-100 bg-indigo-50/50 -mx-5 -mb-5 p-5 rounded-b-xl">
+                            <p class="text-[11px] text-slate-500" id="label-opt2">5-User Monthly Total</p>
+                            <p class="text-2xl font-bold text-indigo-700 mt-0.5" id="price-opt2">₹4,749</p>
+                        </div>
+                    </div>
+
+                    <!-- OPTION 3 -->
+                    <div class="bg-white rounded-xl p-5 border-2 border-purple-500 shadow-sm flex flex-col justify-between relative">
+                        <span class="absolute -top-2.5 right-4 bg-purple-600 text-white text-[10px] font-bold px-2.5 py-0.5 rounded shadow-sm">RECOMMENDED</span>
+                        <div>
+                            <div class="flex justify-between items-center mb-3">
+                                <span class="text-xs font-bold text-slate-400">OPTION 3</span>
+                                <span class="px-2.5 py-0.5 bg-purple-50 text-purple-700 text-[11px] font-bold rounded-md border border-purple-200">Unified ERP</span>
+                            </div>
+                            <h3 class="text-base font-bold text-slate-900 mb-1">Zoho ERP Standard</h3>
+                            <p class="text-xs text-slate-500 mb-4">Integrated operational platform for sales, stock, and purchasing.</p>
+                            
+                            <div class="space-y-2 border-t border-slate-100 pt-3 text-xs">
+                                <div class="flex justify-between items-center">
+                                    <span class="text-slate-600">Zoho ERP Standard (5 Users)</span>
+                                    <a href="https://www.zoho.com/en-in/erp/pricing/" target="_blank" class="text-indigo-600 hover:underline font-medium">₹999/user ↗</a>
+                                </div>
+                                <p class="text-[11px] text-slate-400">*Minimum 5 users base pricing tier.</p>
+                            </div>
+                        </div>
+
+                        <div class="mt-5 pt-4 border-t border-slate-100 bg-purple-50/50 -mx-5 -mb-5 p-5 rounded-b-xl">
+                            <p class="text-[11px] text-slate-500" id="label-opt3">5-User Monthly Total</p>
+                            <p class="text-2xl font-bold text-purple-700 mt-0.5" id="price-opt3">₹4,995</p>
+                        </div>
+                    </div>
+
+                    <!-- OPTION 4 -->
+                    <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm flex flex-col justify-between">
+                        <div>
+                            <div class="flex justify-between items-center mb-3">
+                                <span class="text-xs font-bold text-slate-400">OPTION 4</span>
+                                <span class="px-2.5 py-0.5 bg-slate-100 text-slate-700 text-[11px] font-bold rounded-md border border-slate-200">Hybrid Desktop</span>
+                            </div>
+                            <h3 class="text-base font-bold text-slate-900 mb-1">Zoho CRM Std + TallyPrime</h3>
+                            <p class="text-xs text-slate-500 mb-4">Cloud sales pipeline paired with local Tally Gold accounting.</p>
+                            
+                            <div class="space-y-2 border-t border-slate-100 pt-3 text-xs">
+                                <div class="flex justify-between items-center">
+                                    <span class="text-slate-600">Zoho CRM Standard (5 Users)</span>
+                                    <a href="https://www.zoho.com/crm/pricing.html" target="_blank" class="text-indigo-600 hover:underline font-medium">₹800/user ↗</a>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-slate-600">TallyPrime Gold (Multi-user)</span>
+                                    <a href="https://tallysolutions.com/buy-tally/" target="_blank" class="text-indigo-600 hover:underline font-medium">₹67,500 one-time ↗</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-5 pt-4 border-t border-slate-100 bg-slate-50 -mx-5 -mb-5 p-5 rounded-b-xl">
+                            <p class="text-[11px] text-slate-500" id="label-opt4">CRM Subscription</p>
+                            <p class="text-xl font-bold text-slate-900 mt-0.5" id="price-opt4">₹4,000 / mo</p>
+                            <p class="text-[11px] text-amber-600 font-medium mt-1" id="one-time-opt4">+ ₹67,500 one-time Tally license</p>
+                        </div>
+                    </div>
+
+                    <!-- OPTION 5 -->
+                    <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm flex flex-col justify-between">
+                        <div>
+                            <div class="flex justify-between items-center mb-3">
+                                <span class="text-xs font-bold text-slate-400">OPTION 5</span>
+                                <span class="px-2.5 py-0.5 bg-blue-50 text-blue-700 text-[11px] font-bold rounded-md border border-blue-200">Marketing & Sales</span>
+                            </div>
+                            <h3 class="text-base font-bold text-slate-900 mb-1">Zoho CRM Plus + Zoho Books</h3>
+                            <p class="text-xs text-slate-500 mb-4">Includes marketing tools, helpdesk ticketing, and invoicing.</p>
+                            
+                            <div class="space-y-2 border-t border-slate-100 pt-3 text-xs">
+                                <div class="flex justify-between items-center">
+                                    <span class="text-slate-600">CRM Plus Starter (5 Users)</span>
+                                    <a href="https://www.zoho.com/crm/crmplus/pricing.html" target="_blank" class="text-indigo-600 hover:underline font-medium">₹1,200/user ↗</a>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-slate-600">Zoho Books Standard</span>
+                                    <a href="https://www.zoho.com/in/books/pricing/" target="_blank" class="text-indigo-600 hover:underline font-medium">₹749/org ↗</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-5 pt-4 border-t border-slate-100 bg-slate-50 -mx-5 -mb-5 p-5 rounded-b-xl">
+                            <p class="text-[11px] text-slate-500" id="label-opt5">5-User Monthly Total</p>
+                            <p class="text-2xl font-bold text-slate-900 mt-0.5" id="price-opt5">₹6,749</p>
+                        </div>
+                    </div>
+
+                    <!-- OPTION 6 -->
+                    <div class="bg-white rounded-xl p-5 border-2 border-emerald-500 shadow-sm flex flex-col justify-between relative">
+                        <span class="absolute -top-2.5 right-4 bg-emerald-600 text-white text-[10px] font-bold px-2.5 py-0.5 rounded shadow-sm">STRONGLY RECOMMENDED</span>
+                        <div>
+                            <div class="flex justify-between items-center mb-3">
+                                <span class="text-xs font-bold text-slate-400">OPTION 6</span>
+                                <span class="px-2.5 py-0.5 bg-emerald-50 text-emerald-700 text-[11px] font-bold rounded-md border border-emerald-200">All-In-One Suite</span>
+                            </div>
+                            <h3 class="text-base font-bold text-slate-900 mb-1">Zoho One (All-Employee)</h3>
+                            <p class="text-xs text-slate-500 mb-4">Complete suite giving access to 45+ enterprise tools.</p>
+                            
+                            <div class="space-y-2 border-t border-slate-100 pt-3 text-xs">
+                                <div class="flex justify-between items-center">
+                                    <span class="text-slate-600">Zoho One All-Employee (5 Users)</span>
+                                    <a href="https://www.zoho.com/one/pricing/" target="_blank" class="text-indigo-600 hover:underline font-medium">₹1,250/user ↗</a>
+                                </div>
+                                <p class="text-[11px] text-slate-500">Includes CRM, Books, Inventory, Desk, Sign, Projects & Campaigns.</p>
+                            </div>
+                        </div>
+
+                        <div class="mt-5 pt-4 border-t border-slate-100 bg-emerald-50/50 -mx-5 -mb-5 p-5 rounded-b-xl">
+                            <p class="text-[11px] text-slate-500" id="label-opt6">5-User Monthly Total</p>
+                            <p class="text-2xl font-bold text-emerald-700 mt-0.5" id="price-opt6">₹6,250</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- FEATURE COMPARISON TABLE -->
+            <div class="p-4 sm:p-6 bg-slate-50 border-t border-slate-200">
+                <h3 class="text-sm font-bold text-slate-900 mb-3">Feature Comparison Matrix</h3>
+                <div class="overflow-x-auto custom-scrollbar border border-slate-200 rounded-lg bg-white">
+                    <table class="w-full text-left text-xs border-collapse min-w-[650px]">
+                        <thead>
+                            <tr class="bg-slate-100 border-b border-slate-200 text-slate-600 font-semibold">
+                                <th class="p-3">Capability</th>
+                                <th class="p-3">Opt 1 (Bigin)</th>
+                                <th class="p-3 text-indigo-700">Opt 2 (CRM Std)</th>
+                                <th class="p-3 text-purple-700">Opt 3 (ERP)</th>
+                                <th class="p-3">Opt 4 (Tally)</th>
+                                <th class="p-3">Opt 5 (Plus)</th>
+                                <th class="p-3 text-emerald-700">Opt 6 (Zoho One)</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-100 text-slate-700">
+                            <tr>
+                                <td class="p-3 font-medium text-slate-900">Sales Pipeline</td>
+                                <td class="p-3">Basic Pipeline</td>
+                                <td class="p-3 font-semibold text-indigo-600">Custom Stages</td>
+                                <td class="p-3 font-semibold text-purple-600">ERP Workflow</td>
+                                <td class="p-3">Custom Stages</td>
+                                <td class="p-3">Advanced Pipeline</td>
+                                <td class="p-3 font-semibold text-emerald-600">Full Enterprise CRM</td>
+                            </tr>
+                            <tr>
+                                <td class="p-3 font-medium text-slate-900">Invoicing & Accounting</td>
+                                <td class="p-3">Books Standard</td>
+                                <td class="p-3 font-semibold text-indigo-600">Books Standard</td>
+                                <td class="p-3 font-semibold text-purple-600">ERP Accounting</td>
+                                <td class="p-3">TallyPrime Gold</td>
+                                <td class="p-3">Books Standard</td>
+                                <td class="p-3 font-semibold text-emerald-600">Books Included</td>
+                            </tr>
+                            <tr>
+                                <td class="p-3 font-medium text-slate-900">Inventory Management</td>
+                                <td class="p-3">Books Stock</td>
+                                <td class="p-3 font-semibold text-indigo-600">Books Stock</td>
+                                <td class="p-3 font-semibold text-purple-600">Core ERP Stock</td>
+                                <td class="p-3">Tally Stock</td>
+                                <td class="p-3">Books Stock</td>
+                                <td class="p-3 font-semibold text-emerald-600">Zoho Inventory App</td>
+                            </tr>
+                            <tr>
+                                <td class="p-3 font-medium text-slate-900">Marketing & Helpdesk</td>
+                                <td class="p-3 text-slate-400">Not Included</td>
+                                <td class="p-3 text-slate-400">Basic Workflows</td>
+                                <td class="p-3 text-slate-400">Not Included</td>
+                                <td class="p-3 text-slate-400">Basic Workflows</td>
+                                <td class="p-3 text-blue-600">Campaigns + Desk</td>
+                                <td class="p-3 font-semibold text-emerald-600">Full Suite Apps</td>
+                            </tr>
+                            <tr>
+                                <td class="p-3 font-medium text-slate-900">Integration Overhead</td>
+                                <td class="p-3">Native Sync</td>
+                                <td class="p-3 font-semibold text-indigo-600">Native Sync</td>
+                                <td class="p-3 font-semibold text-purple-600">Single System</td>
+                                <td class="p-3 text-amber-600 font-medium">Desktop Connector</td>
+                                <td class="p-3">Native Sync</td>
+                                <td class="p-3 font-semibold text-emerald-600">Unified Single-Sign-On</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- SIMPLE FOOTER -->
+            <footer class="p-4 border-t border-slate-200 text-center text-slate-400 text-xs bg-white">
+                5-User Business Software Comparison Proposal • Official Vendor Tiers
+            </footer>
+
+        </div>
+    </main>
+
+    <!-- INTERACTIVE SCRIPT -->
+    <script>
+        let isAnnual = true;
+        let withGST = false;
+
+        const baseRates = {
+            opt1: 4349,          // (720 * 5) + 749
+            opt2: 4749,          // (800 * 5) + 749
+            opt3: 4995,          // (999 * 5)
+            opt4Recurring: 4000, // (800 * 5) CRM
+            opt4OneTime: 67500,  // Tally Gold one-time
+            opt5: 6749,          // (1200 * 5) + 749
+            opt6: 6250           // (1250 * 5)
+        };
+
+        function setViewport(mode) {
+            const container = document.getElementById('previewContainer');
+            const btnDesktop = document.getElementById('btn-desktop');
+            const btnMobile = document.getElementById('btn-mobile');
+
+            if (mode === 'mobile') {
+                container.className = 'preview-wrapper view-mobile bg-white border border-slate-200 rounded-2xl shadow-sm overflow-hidden transition-all duration-300';
+                btnMobile.className = 'p-1.5 rounded bg-white text-indigo-600 shadow-sm transition';
+                btnDesktop.className = 'p-1.5 rounded text-slate-500 hover:text-slate-900 transition';
+            } else {
+                container.className = 'preview-wrapper view-desktop bg-white border border-slate-200 rounded-2xl shadow-sm overflow-hidden transition-all duration-300';
+                btnDesktop.className = 'p-1.5 rounded bg-white text-indigo-600 shadow-sm transition';
+                btnMobile.className = 'p-1.5 rounded text-slate-500 hover:text-slate-900 transition';
+            }
+        }
+
+        function toggleBillingCycle() {
+            isAnnual = !isAnnual;
+            const dot = document.getElementById('cycleDot');
+            const button = document.getElementById('cycleToggle');
+            dot.style.transform = isAnnual ? 'translateX(1rem)' : 'translateX(0)';
+            button.className = `w-9 h-5 rounded-full p-0.5 transition-colors relative ${isAnnual ? 'bg-indigo-600' : 'bg-slate-300'}`;
+            calculateTotals();
+        }
+
+        function toggleGST() {
+            withGST = !withGST;
+            const dot = document.getElementById('gstDot');
+            const button = document.getElementById('gstToggle');
+            dot.style.transform = withGST ? 'translateX(1rem)' : 'translateX(0)';
+            button.className = `w-9 h-5 rounded-full p-0.5 transition-colors relative ${withGST ? 'bg-indigo-600' : 'bg-slate-300'}`;
+            calculateTotals();
+        }
+
+        function formatINR(amount) {
+            return '₹' + Math.round(amount).toLocaleString('en-IN');
+        }
+
+        function calculateTotals() {
+            const mult = isAnnual ? 12 : 1;
+            const gst = withGST ? 1.18 : 1;
+
+            const labelText = isAnnual ? '5-User Annual Total' : '5-User Monthly Total';
+            const recLabel = isAnnual ? 'CRM Subscription (Annual)' : 'CRM Subscription (Monthly)';
+
+            ['opt1', 'opt2', 'opt3', 'opt5', 'opt6'].forEach(id => {
+                const el = document.getElementById(`label-${id}`);
+                if (el) el.textContent = labelText;
+            });
+            
+            const elOpt4 = document.getElementById('label-opt4');
+            if (elOpt4) elOpt4.textContent = recLabel;
+
+            document.getElementById('price-opt1').textContent = formatINR(baseRates.opt1 * mult * gst);
+            document.getElementById('price-opt2').textContent = formatINR(baseRates.opt2 * mult * gst);
+            document.getElementById('price-opt3').textContent = formatINR(baseRates.opt3 * mult * gst);
+            
+            document.getElementById('price-opt4').textContent = formatINR(baseRates.opt4Recurring * mult * gst) + (isAnnual ? ' / yr' : ' / mo');
+            document.getElementById('one-time-opt4').textContent = '+ ' + formatINR(baseRates.opt4OneTime * gst) + ' one-time Tally license';
+
+            document.getElementById('price-opt5').textContent = formatINR(baseRates.opt5 * mult * gst);
+            document.getElementById('price-opt6').textContent = formatINR(baseRates.opt6 * mult * gst);
+        }
+
+        // Initialize calculations
+        calculateTotals();
+    </script>
+</body>
+</html>
